@@ -1,0 +1,18 @@
+Funcion edad <- calculadorEdad (nacimiento, actual)
+    edad <- actual - nacimiento
+Fin Funcion
+
+Algoritmo calcularEdad
+    añoActual<-0
+    añoNac<-0
+
+    Escribir 'Cual es el año actual?'
+    Leer añoActual
+
+    Escribir 'Cual es el año de nacimiento'
+    leer añoNac
+
+    edad <-calculadorEdad(añoNac, añoActual)
+
+    Escribir 'Tu edad es: ', edad
+finAlgoritmo
