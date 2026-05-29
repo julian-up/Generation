@@ -1,0 +1,24 @@
+{
+  "name": "tareas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lab-primitivos.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julian-up/Generation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/julian-up/Generation/issues"
+  },
+  "homepage": "https://github.com/julian-up/Generation#readme",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
