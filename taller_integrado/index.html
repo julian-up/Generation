@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- ── SIDEBAR ──────────────────────────────────────────── -->
+      <aside id="sidebar">
+        <div class="sidebar-brand">
+          <span class="brand-name">Tasks</span>
+        </div>
+
+        <!-- Contador vivo — los <span> son los únicos puntos que JS toca -->
+        <div class="sidebar-stats">
+          <p class="stats-label">Completadas</p>
+          <p class="stats-count">
+            <span id="hechas">0</span><span class="stats-sep">/</span
+            ><span id="total">0</span>
+          </p>
+        </div>
+
+        <div class="sidebar-footer">
+          <button id="btn-limpiar">Limpiar completadas</button>
+        </div>
+      </aside>
+
+      <!-- ── ÁREA PRINCIPAL ───────────────────────────────────── -->
+      <main id="main">
+        <header class="main-header">
+          <h2 class="main-title">Mis tareas</h2>
+        </header>
+
+        <!-- Formulario de nueva tarea -->
+        <div id="formulario">
+          <div class="form-row">
+            <input
+              type="text"
+              id="input-tarea"
+              placeholder="Agregar una tarea..."
+            />
+            <select id="categoria">
+              <option value="trabajo">💼 Trabajo</option>
+              <option value="estudio">📚 Estudio</option>
+              <option value="personal">🏠 Personal</option>
+              <option value="urgente">🔴 Urgente</option>
+              <option value="otra">✏️ Otra...</option>
+            </select>
+            <!-- onclick: acción simple de un solo propósito -->
+            <button onclick="agregarTarea()">Agregar</button>
+          </div>
+
+          <!-- display:none inicial — única excepción de style="" permitida en el HTML -->
+          <input
+            type="text"
+            id="otra-categoria"
+            placeholder="Nombre de la categoría..."
+            style="display: none"
+          />
+
+          <!-- El error aparece aquí, sin alert() -->
+          <span id="error"></span>
+        </div>
+
+        <!-- JS inserta los <li> aquí -->
+        <ul id="lista-tareas"></ul>
+        <p id="empty-state">No hay tareas. Agrega una arriba.</p>
+      </main>
+    </div>
+
+    <!-- Overlay y Drawer viven fuera del grid para no afectar el layout -->
+    <div id="drawer-overlay"></div>
+
+    <aside id="drawer">
+      <div class="drawer-header">
+        <button id="drawer-close" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path
+              d="M1 1L13 13M13 1L1 13"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="drawer-body">
+        <div id="drawer-emoji" class="drawer-emoji"></div>
+        <h3 id="drawer-titulo"></h3>
+        <div id="drawer-badges" class="drawer-badges"></div>
+        <div class="drawer-actions">
+          <button id="drawer-btn-hecha">Marcar como hecha</button>
+          <button id="drawer-btn-urgente">Marcar como urgente</button>
+          <button id="drawer-btn-eliminar" class="btn-danger">
+            Eliminar tarea
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- El script SIEMPRE al final del body, nunca en el head -->
+    <script src="app.js"></script>
+  </body>
+</html>

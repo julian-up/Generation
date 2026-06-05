@@ -1,0 +1,620 @@
+/* =============================================================================
+   DESIGN TOKENS — Un solo lugar para toda la paleta, tipografía y radios.
+   Cambiar una variable aquí afecta toda la interfaz.
+============================================================================= */
+:root {
+  /* Paleta oscura estilo Vercel/Linear */
+  --bg: #0a0a0a;
+  --surface: #111111;
+  --surface-hover: #161616;
+  --surface-active: #1c1c1c;
+
+  /* Bordes sutiles — no líneas gruesas ni decorativas */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+
+  /* Jerarquía de texto con 3 niveles de contraste */
+  --text-1: #ededed; /* primario */
+  --text-2: #a1a1a1; /* secundario */
+  --text-3: #555555; /* desactivado / muted */
+
+  /* Estados de las tareas */
+  --color-done: #22c55e;
+  --color-done-bg: rgba(34, 197, 94, 0.08);
+  --color-done-border: rgba(34, 197, 94, 0.2);
+  --color-urgent: #ef4444;
+  --color-urgent-bg: rgba(239, 68, 68, 0.08);
+  --color-urgent-border: rgba(239, 68, 68, 0.2);
+
+  /* Escala de espaciado */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+
+  /* Tipografía */
+  --font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-base: 13px;
+  --text-lg: 15px;
+
+  /* Radios — sin exagerar (Vercel usa 6px) */
+  --radius: 6px;
+  --radius-sm: 4px;
+
+  /* Dimensiones de los paneles */
+  --sidebar-w: 220px;
+  --drawer-w: 360px;
+
+  /* Tiempos de animación — spec Emil Kowalski */
+  --ease-active: 100ms ease; /* :active en tarjetas y botones */
+  --ease-base: 150ms ease-out; /* transiciones generales */
+  --ease-drawer: 220ms cubic-bezier(0.16, 1, 0.3, 1); /* entrada del drawer */
+}
+
+/* =============================================================================
+   RESET
+============================================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text-1);
+  font-size: var(--text-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: var(--font);
+}
+
+/* =============================================================================
+   LAYOUT — CSS Grid: sidebar (fijo) | área principal (flex: 1)
+============================================================================= */
+#app {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* =============================================================================
+   SIDEBAR
+============================================================================= */
+#sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-5) var(--sp-4);
+  gap: var(--sp-6);
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  padding: var(--sp-1) var(--sp-2);
+}
+
+.brand-name {
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-1);
+}
+
+/* Bloque de estadísticas */
+.sidebar-stats {
+  padding: var(--sp-4);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.stats-label {
+  font-size: var(--text-xs);
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: var(--sp-1);
+}
+
+.stats-count {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  /* tabular-nums: cada dígito ocupa el mismo ancho → el contador nunca "salta" */
+  font-variant-numeric: tabular-nums;
+  color: var(--text-1);
+}
+
+.stats-sep {
+  color: var(--text-3);
+  font-weight: 300;
+  margin: 0 3px;
+}
+
+/* El botón "Limpiar" va empujado al fondo del sidebar */
+.sidebar-footer {
+  margin-top: auto;
+}
+
+#btn-limpiar {
+  width: 100%;
+  padding: var(--sp-2) var(--sp-3);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-3);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  /* Solo color y border-color en la transición — sin layout properties */
+  transition:
+    color var(--ease-base),
+    border-color var(--ease-base);
+}
+
+#btn-limpiar:hover {
+  color: var(--text-2);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+#btn-limpiar:active {
+  /* GPU rule: solo transform */
+  transform: scale(0.97);
+  transition: transform var(--ease-active);
+}
+
+/* =============================================================================
+   ÁREA PRINCIPAL
+============================================================================= */
+#main {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: var(--sp-8);
+}
+
+.main-header {
+  margin-bottom: var(--sp-6);
+}
+
+.main-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-1);
+}
+
+/* =============================================================================
+   FORMULARIO
+============================================================================= */
+#formulario {
+  margin-bottom: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.form-row {
+  display: flex;
+  gap: var(--sp-2);
+}
+
+#input-tarea {
+  flex: 1;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-1);
+  font-size: var(--text-base);
+  font-family: var(--font);
+  outline: none;
+  transition: border-color var(--ease-base);
+}
+
+#input-tarea::placeholder {
+  color: var(--text-3);
+}
+#input-tarea:focus {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+#categoria {
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  font-family: var(--font);
+  cursor: pointer;
+  outline: none;
+}
+
+/* Campo "Otra" — empieza oculto por JS (style="display:none" en HTML).
+   La transición usa solo opacity y transform (GPU rule). */
+#otra-categoria {
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-1);
+  font-size: var(--text-base);
+  font-family: var(--font);
+  outline: none;
+  transition:
+    border-color var(--ease-base),
+    opacity var(--ease-base),
+    transform var(--ease-base);
+}
+
+#otra-categoria:focus {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.form-row button {
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--text-1);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity var(--ease-base);
+}
+
+.form-row button:hover {
+  opacity: 0.85;
+}
+
+.form-row button:active {
+  transform: scale(0.97);
+  transition: transform var(--ease-active);
+}
+
+/* El mensaje de error está siempre en el DOM, visible solo cuando JS le pone texto */
+#error {
+  font-size: var(--text-sm);
+  color: var(--color-urgent);
+  min-height: 16px;
+  padding-left: var(--sp-1);
+}
+
+/* =============================================================================
+   LISTA DE TAREAS
+============================================================================= */
+#lista-tareas {
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden; /* border-radius recorta el primer y último item */
+  display: none; /* JS la muestra cuando hay tareas */
+}
+
+#empty-state {
+  color: var(--text-3);
+  font-size: var(--text-sm);
+  padding: var(--sp-8) 0;
+}
+
+/* =============================================================================
+   TASK ROW — estilo Linear: lista limpia, no cards grandes
+============================================================================= */
+.tarea {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: background var(--ease-base);
+}
+
+.tarea:last-child {
+  border-bottom: none;
+}
+.tarea:hover {
+  background: var(--surface-hover);
+}
+
+.tarea:active {
+  /* GPU rule: solo transform */
+  transform: scale(0.99);
+  transition: transform var(--ease-active);
+}
+
+/* Indicador circular a la izquierda — muestra el estado de la tarea */
+.tarea-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text-3);
+  flex-shrink: 0;
+  transition:
+    background var(--ease-base),
+    border-color var(--ease-base);
+}
+
+/* La parte de texto ocupa todo el espacio disponible */
+.tarea-info {
+  flex: 1;
+  min-width: 0; /* permite que el texto se trunque con ellipsis */
+}
+
+.tarea-texto {
+  display: block;
+  font-size: var(--text-base);
+  color: var(--text-1);
+  /* 65ch = longitud de línea óptima para legibilidad (aprox. 65 caracteres) */
+  max-width: 65ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tarea-cat {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+/* Botones de acción — ocultos por defecto, visibles al hacer hover en la fila.
+   Solo se anima opacity (GPU rule). */
+.tarea-acciones {
+  display: flex;
+  gap: var(--sp-1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ease-base);
+}
+
+.tarea:hover .tarea-acciones {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.btn-accion {
+  padding: 3px var(--sp-2);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    color var(--ease-base),
+    border-color var(--ease-base),
+    background var(--ease-base);
+}
+
+.btn-accion:hover {
+  color: var(--text-1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-accion:active {
+  transform: scale(0.97);
+  transition: transform var(--ease-active);
+}
+
+.btn-eliminar:hover {
+  color: var(--color-urgent);
+  border-color: var(--color-urgent-border);
+  background: var(--color-urgent-bg);
+}
+
+/* Estado: hecha — JS añade la clase "hecha" al <li> */
+.tarea.hecha .tarea-dot {
+  background: var(--color-done);
+  border-color: var(--color-done);
+}
+
+.tarea.hecha .tarea-texto {
+  text-decoration: line-through;
+  color: var(--text-3);
+}
+
+/* Estado: urgente — JS añade la clase "urgente" al <li> */
+.tarea.urgente {
+  background: var(--color-urgent-bg);
+}
+
+.tarea.urgente .tarea-dot {
+  border-color: var(--color-urgent);
+}
+
+/* =============================================================================
+   OVERLAY — fondo oscuro detrás del drawer
+============================================================================= */
+#drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  /* GPU rule: solo opacity */
+  transition: opacity var(--ease-base);
+}
+
+#drawer-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* =============================================================================
+   DRAWER — panel lateral que entra desde la derecha
+============================================================================= */
+#drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: var(--drawer-w);
+  height: 100vh;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  /* Cerrado: desplazado completamente fuera de pantalla (GPU: transform) */
+  transform: translateX(100%);
+  /* Timing del spec: curva suave con mucho overshoot inicial */
+  transition: transform var(--ease-drawer);
+}
+
+/* Abierto: en su posición natural */
+#drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--sp-4) var(--sp-4) 0;
+}
+
+#drawer-close {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  cursor: pointer;
+  transition:
+    color var(--ease-base),
+    border-color var(--ease-base);
+}
+
+#drawer-close:hover {
+  color: var(--text-1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+#drawer-close:active {
+  transform: scale(0.97);
+  transition: transform var(--ease-active);
+}
+
+.drawer-body {
+  padding: var(--sp-6);
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.drawer-emoji {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.drawer-body h3 {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-1);
+  max-width: 65ch;
+}
+
+/* Badges de estado dentro del drawer */
+.drawer-badges {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 2px var(--sp-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  border: 1px solid transparent;
+}
+
+.badge-cat {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--border);
+  color: var(--text-2);
+}
+
+.badge-hecha {
+  background: var(--color-done-bg);
+  border-color: var(--color-done-border);
+  color: var(--color-done);
+}
+
+.badge-urgente {
+  background: var(--color-urgent-bg);
+  border-color: var(--color-urgent-border);
+  color: var(--color-urgent);
+}
+
+/* Sección de acciones al fondo del drawer */
+.drawer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-top: auto;
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--border);
+}
+
+.drawer-actions button {
+  padding: var(--sp-2) var(--sp-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text-1);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition:
+    background var(--ease-base),
+    border-color var(--ease-base);
+}
+
+.drawer-actions button:hover {
+  background: var(--surface-hover);
+}
+
+.drawer-actions button:active {
+  transform: scale(0.97);
+  transition: transform var(--ease-active);
+}
+
+.drawer-actions .btn-danger {
+  color: var(--color-urgent);
+  border-color: var(--color-urgent-border);
+}
+
+.drawer-actions .btn-danger:hover {
+  background: var(--color-urgent-bg);
+  border-color: var(--color-urgent);
+}
