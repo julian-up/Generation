@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversión de Temperaturas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: #eaeaea;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            color: #e94560;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        h2 {
+            color: #0f3460;
+            background-color: #e94560;
+            padding: 5px 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        #resultado {
+            background-color: #16213e;
+            border: 2px solid #0f3460;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        #resultado h3 {
+            color: #e94560;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .entrada {
+            background-color: #0f3460;
+            color: #eaeaea;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .conversion {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .conversion-item {
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .fahrenheit {
+            background-color: #5c2300;
+            border: 1px solid #e85d04;
+            color: #ffba08;
+        }
+
+        .kelvin {
+            background-color: #003049;
+            border: 1px solid #1d8ab5;
+            color: #90e0ef;
+        }
+
+        .error {
+            background-color: #5c0000;
+            border: 1px solid #ff0000;
+            color: #ffcccc;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conversión de Temperaturas</h1>
+    <h2>Celsius → Fahrenheit y Kelvin</h2>
+
+    <div id="resultado">
+        <h3>Cargando...</h3>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
